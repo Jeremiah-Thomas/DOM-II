@@ -44,12 +44,56 @@ document.addEventListener("click", (evt) => {
 
 //Use load event
 window.addEventListener("load", (evt) => {
-  alert("Welcome to Great Idea!");
+  alert("Welcome to Great Idea! Where terrible UX is our goal.");
 });
 
 //Use mouseover event
 document.querySelector("header").addEventListener("mouseover", (evt) => {
-  alert("Please don't leave!");
+  if (evt.fromElement.nodeName === "BODY") {
+    alert("Please don't leave!");
+  }
+  console.log(evt.fromElement);
+});
+
+//Use contextmenu event
+const rightClkPlaceElem = document.createElement("div");
+rightClkPlaceElem.style.position = "fixed";
+rightClkPlaceElem.style.pointerEvents = "none";
+rightClkPlaceElem.style.width = "60px";
+rightClkPlaceElem.style.height = "40px";
+rightClkPlaceElem.style.backgroundColor = "#17A2B8";
+rightClkPlaceElem.style.zIndex = "1000";
+rightClkPlaceElem.textContent = "You right clicked";
+document.querySelector("body").addEventListener("contextmenu", (evt) => {
+  evt.preventDefault();
+  rightClkPlaceElem.style.left = String(evt.x - 30 + "px");
+  rightClkPlaceElem.style.top = String(evt.y - 20 + "px");
+  evt.target.appendChild(rightClkPlaceElem);
+  return false;
+});
+
+//Use mousedown event
+document.addEventListener("mousedown", (evt) => {
+  if (evt.target.textContent) {
+    evt.target.style.color = "red";
+  }
+});
+
+//Use mouseup event
+document.addEventListener("mouseup", (evt) => {
+  if (evt.target.textContent) {
+    evt.target.style.color = "black";
+  }
+});
+
+//Use keydown event
+const mainTitle = document.querySelector(".logo-heading");
+document.addEventListener("keydown", (evt) => {
+  if (evt.key === "Escape") {
+    mainTitle.textContent = "Fun Bus";
+  } else {
+    mainTitle.textContent = `You have pressed the ${evt.key} key.`;
+  }
 });
 
 //Use preventDefault
